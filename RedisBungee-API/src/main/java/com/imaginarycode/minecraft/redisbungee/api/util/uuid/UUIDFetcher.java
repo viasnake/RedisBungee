@@ -2,7 +2,7 @@ package com.imaginarycode.minecraft.redisbungee.api.util.uuid;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
-import com.squareup.okhttp.*;
+import okhttp3.*;
 
 import java.util.HashMap;
 import java.util.List;

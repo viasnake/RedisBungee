@@ -32,8 +32,7 @@ import com.imaginarycode.minecraft.redisbungee.api.RedisBungeeMode;
 import com.imaginarycode.minecraft.redisbungee.api.util.uuid.NameFetcher;
 import com.imaginarycode.minecraft.redisbungee.api.util.uuid.UUIDFetcher;
 import com.imaginarycode.minecraft.redisbungee.api.util.uuid.UUIDTranslator;
-import com.squareup.okhttp.Dispatcher;
-import com.squareup.okhttp.OkHttpClient;
+import okhttp3.*;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Event;
@@ -219,9 +218,10 @@ public class RedisBungee extends Plugin implements RedisBungeePlugin<ProxiedPlay
         this.api = new RedisBungeeAPI(this);
         apiStatic = (RedisBungeeAPI) this.api;
         // init the http lib
-        httpClient = new OkHttpClient();
         Dispatcher dispatcher = new Dispatcher(getExecutorService());
-        httpClient.setDispatcher(dispatcher);
+        OkHttpClient.Builder okbuilder = new OkHttpClient.Builder();
+        okbuilder.setDispatcher$okhttp(dispatcher); // if your ide shows error on this it still compiles, so ignore it.
+        httpClient = new OkHttpClient(okbuilder);
         NameFetcher.setHttpClient(httpClient);
         UUIDFetcher.setHttpClient(httpClient);
         InitialUtils.checkRedisVersion(this);

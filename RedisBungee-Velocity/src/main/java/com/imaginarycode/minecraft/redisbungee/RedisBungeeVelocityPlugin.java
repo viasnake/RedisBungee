@@ -32,8 +32,7 @@ import com.imaginarycode.minecraft.redisbungee.events.PlayerChangedServerNetwork
 import com.imaginarycode.minecraft.redisbungee.events.PlayerJoinedNetworkEvent;
 import com.imaginarycode.minecraft.redisbungee.events.PlayerLeftNetworkEvent;
 import com.imaginarycode.minecraft.redisbungee.events.PubSubMessageEvent;
-import com.squareup.okhttp.Dispatcher;
-import com.squareup.okhttp.OkHttpClient;
+import okhttp3.*;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
@@ -106,9 +105,10 @@ public class RedisBungeeVelocityPlugin implements RedisBungeePlugin<Player>, Con
         uuidTranslator = new UUIDTranslator(this);
         dataManager = new VelocityDataManager(this);
         psl = new PubSubListener(this);
-        this.httpClient = new OkHttpClient();
         Dispatcher dispatcher = new Dispatcher(Executors.newFixedThreadPool(6));
-        this.httpClient.setDispatcher(dispatcher);
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.setDispatcher$okhttp(dispatcher); // if your ide shows error on this it still compiles, so ignore it.
+        this.httpClient = new OkHttpClient();
         NameFetcher.setHttpClient(httpClient);
         UUIDFetcher.setHttpClient(httpClient);
     }
@@ -304,9 +304,9 @@ public class RedisBungeeVelocityPlugin implements RedisBungeePlugin<Player>, Con
             throw new RuntimeException(e);
         }
 
-        this.httpClient.getDispatcher().getExecutorService().shutdown();
+        this.httpClient.dispatcher().executorService().shutdown();
         try {
-            this.httpClient.getDispatcher().getExecutorService().awaitTermination(20, TimeUnit.SECONDS);
+            this.httpClient.dispatcher().executorService().awaitTermination(20, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
