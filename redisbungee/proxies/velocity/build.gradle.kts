@@ -4,6 +4,9 @@ plugins {
     alias(libs.plugins.run.velocity)
 }
 
+version = property("redisbungee-version").toString()
+group = property("redisbungee-group").toString()
+
 dependencies {
     implementation(project(":RedisBungee-Velocity"))
     compileOnly(libs.platform.velocity)

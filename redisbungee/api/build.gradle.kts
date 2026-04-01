@@ -1,5 +1,3 @@
-import java.io.ByteArrayOutputStream
-
 plugins {
     `java-library`
     `maven-publish`
@@ -7,6 +5,10 @@ plugins {
     alias(libs.plugins.indragit)
 
 }
+
+version = property("redisbungee-version").toString()
+group = property("redisbungee-group").toString()
+
 
 dependencies {
     api(libs.guava)
@@ -22,8 +24,8 @@ sourceSets {
     main {
         blossom {
             javaSources {
-                property("version", "$version")
-                property("git-commit", indraGit.commit().toString())
+                property("version", version.toString())
+                property("git", indraGit.commit().get().name)
             }
         }
     }

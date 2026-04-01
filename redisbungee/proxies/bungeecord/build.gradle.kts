@@ -3,6 +3,9 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
+version = property("redisbungee-version").toString()
+group = property("redisbungee-group").toString()
+
 dependencies {
     implementation(project(":RedisBungee-Bungee"))
     compileOnly(libs.platform.bungeecord)

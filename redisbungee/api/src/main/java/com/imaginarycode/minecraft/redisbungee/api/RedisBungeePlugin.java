@@ -1,13 +1,12 @@
 /*
- * Copyright (c) 2013-present RedisBungee contributors
- *
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- *
- *  http://www.eclipse.org/legal/epl-v10.html
- */
-
+* Copyright (c) 2026 RedisBungee contributors
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+*
+* http://www.eclipse.org/legal/epl-v10.html
+*/
 package com.imaginarycode.minecraft.redisbungee.api;
 
 import com.imaginarycode.minecraft.redisbungee.AbstractRedisBungeeAPI;
@@ -15,75 +14,71 @@ import com.imaginarycode.minecraft.redisbungee.api.config.RedisBungeeConfigurati
 import com.imaginarycode.minecraft.redisbungee.api.events.EventsPlatform;
 import com.imaginarycode.minecraft.redisbungee.api.summoners.Summoner;
 import com.imaginarycode.minecraft.redisbungee.api.util.uuid.UUIDTranslator;
-
 import java.net.InetAddress;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-
 /**
- * This Class has all internal methods needed by every redis bungee plugin, and it can be used to implement another platforms than bungeecord or another forks of RedisBungee
- * <p>
- * Reason this is interface because some proxies implementations require the user to extend class for plugins for example bungeecord.
+ * This Class has all internal methods needed by every redis bungee plugin, and it can be used to
+ * implement another platforms than bungeecord or another forks of RedisBungee
+ *
+ * <p>Reason this is interface because some proxies implementations require the user to extend class
+ * for plugins for example bungeecord.
  *
  * @author Ham1255
  * @since 0.7.0
  */
 public interface RedisBungeePlugin<P> extends EventsPlatform {
 
-    default void initialize() {
+  default void initialize() {}
 
-    }
+  default void stop() {}
 
-    default void stop() {
+  void logInfo(String msg);
 
-    }
+  void logInfo(String format, Object... object);
 
-    void logInfo(String msg);
+  void logWarn(String msg);
 
-    void logInfo(String format, Object... object);
+  void logWarn(String format, Object... object);
 
-    void logWarn(String msg);
+  void logFatal(String msg);
 
-    void logWarn(String format, Object... object);
+  void logFatal(String format, Throwable throwable);
 
-    void logFatal(String msg);
+  RedisBungeeConfiguration configuration();
 
-    void logFatal(String format, Throwable throwable);
+  Summoner<?> getSummoner();
 
-    RedisBungeeConfiguration configuration();
+  RedisBungeeMode getRedisBungeeMode();
 
-    Summoner<?> getSummoner();
+  AbstractRedisBungeeAPI getAbstractRedisBungeeApi();
 
-    RedisBungeeMode getRedisBungeeMode();
+  ProxyDataManager proxyDataManager();
 
-    AbstractRedisBungeeAPI getAbstractRedisBungeeApi();
+  PlayerDataManager<P> playerDataManager();
 
-    ProxyDataManager proxyDataManager();
+  UUIDTranslator getUuidTranslator();
 
-    PlayerDataManager<P> playerDataManager();
+  boolean isOnlineMode();
 
-    UUIDTranslator getUuidTranslator();
+  P getPlayer(UUID uuid);
 
-    boolean isOnlineMode();
+  P getPlayer(String name);
 
-    P getPlayer(UUID uuid);
+  UUID getPlayerUUID(String player);
 
-    P getPlayer(String name);
+  String getPlayerName(UUID player);
 
-    UUID getPlayerUUID(String player);
+  String getPlayerServerName(P player);
 
-    String getPlayerName(UUID player);
+  boolean isPlayerOnAServer(P player);
 
-    String getPlayerServerName(P player);
+  InetAddress getPlayerIp(P player);
 
-    boolean isPlayerOnAServer(P player);
+  void executeAsync(Runnable runnable);
 
-    InetAddress getPlayerIp(P player);
+  void executeAsyncAfter(Runnable runnable, TimeUnit timeUnit, int time);
 
-    void executeAsync(Runnable runnable);
-
-    void executeAsyncAfter(Runnable runnable, TimeUnit timeUnit, int time);
-
-    String platformId();
+  String platformId();
 }

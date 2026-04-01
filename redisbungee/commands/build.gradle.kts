@@ -2,6 +2,9 @@ plugins {
     `java-library`
 }
 
+version = property("redisbungee-version").toString()
+group = property("redisbungee-group").toString()
+
 dependencies {
     compileOnly(project(":RedisBungee-API"))
     implementation(libs.acf.core)

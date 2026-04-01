@@ -3,6 +3,9 @@ plugins {
     `maven-publish`
 }
 
+version = property("redisbungee-version").toString()
+group = property("redisbungee-group").toString()
+
 dependencies {
     api(project(":RedisBungee-API"))
     compileOnly(libs.adventure.platforms.bungeecord)
