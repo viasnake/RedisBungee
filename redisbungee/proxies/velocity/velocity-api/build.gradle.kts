@@ -34,7 +34,7 @@ tasks {
         options.links(
             "https://jd.papermc.io/velocity/3.0.0/", // velocity api
         )
-        val apiDocs = File(rootProject.projectDir, "api/build/docs/javadoc")
+        val apiDocs = File(rootProject.projectDir, "redisbungee/api/build/docs/javadoc")
         options.linksOffline("https://ci.limework.net/ValioBungee/api/build/docs/javadoc", apiDocs.path)
     }
     compileJava {

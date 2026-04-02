@@ -29,7 +29,7 @@ tasks {
         options.links(
             "https://hub.spigotmc.org/jenkins/job/BungeeCord/ws/api/target/reports/apidocs", // bungeecord api
         )
-        val apiDocs = File(rootProject.projectDir, "api/build/docs/javadoc")
+        val apiDocs = File(rootProject.projectDir, "redisbungee/api/build/docs/javadoc")
         options.linksOffline("https://ci.limework.net/ValioBungee/api/build/docs/javadoc", apiDocs.path)
     }
     compileJava {
